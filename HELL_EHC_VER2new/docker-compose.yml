@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  php:
+    build: 
+      context: ./php-service
+      dockerfile: Dockerfile
+    container_name: php
+    volumes:
+      - ./php-service/src:/var/www/html # Mount the source code directory to the container
+    ports:
+      - "1337:80" 
+    links:
+      - postgresdb
+    depends_on:
+      - postgresdb
+    networks:
+      - app-network
+
+  postgresdb:
+    build: 
+      context: ./postgres-service
+      dockerfile: Dockerfile
+    container_name: postgresdb
+    volumes:
+      - db_data:/var/lib/postgresql/data # Persist PostgreSQL data
+    environment:
+      POSTGRES_USER: ehc_child
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: hell_ehc_ver2
+    ports:
+      - "5432:5432" # Map PostgreSQL port
+    networks:
+      - app-network
+
+volumes:
+  db_data:
+
+networks:
+  app-network:
+    driver: bridge
