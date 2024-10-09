@@ -1,0 +1,34 @@
+# Enable RewriteEngine
+RewriteEngine On
+
+# Check if the request is not a real file or directory
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Rewrite /static to /Views/static
+RewriteRule ^static/style.css$ Views/static/style.css [L]
+
+# Rewrite GET /login to /Views/login.html
+RewriteCond %{REQUEST_METHOD} GET
+RewriteRule ^login$ Views/templates/login.html [L]
+
+# Rewrite POST /login to /Controllers/login.php
+RewriteCond %{REQUEST_METHOD} POST
+RewriteRule ^login$ Controllers/login.php [L]
+
+# Rewrite /register to /Views/register.html
+RewriteCond %{REQUEST_METHOD} GET
+RewriteRule ^register$ Views/templates/register.html [L]
+
+RewriteCond %{REQUEST_METHOD} POST
+RewriteRule ^register$ Controllers/register.php [L]
+
+# Rewrite /flag to /Views/flag.php
+RewriteRule ^flag$ Views/templates/flag.php [L]
+
+# Rewrite /admin to /Views/admin.php
+RewriteRule ^admin$ Views/templates/admin.php [L]
+
+# Rewrite /read_poem to /Views/read_poem.php
+RewriteRule ^read_poem$ /Views/templates/read_poem.php [L]
+
