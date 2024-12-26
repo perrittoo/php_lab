@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  php:
+    build: 
+      context: ./php-service
+      dockerfile: Dockerfile
+    container_name: php
+    volumes:
+      - ./php-service/src:/var/www/html
+    ports:
+      - "1337:80" 
+    links:
+      - postgresdb
+    depends_on:
+      - postgresdb
+    networks:
+      - app-network
+
+  postgresdb:
+    build: 
+      context: ./postgres-service
+      dockerfile: Dockerfile
+    container_name: postgresdb
+    volumes:
+      - db_data:/var/lib/postgresql/data 
+    ports:
+      - "5432:5432" 
+    networks:
+      - app-network
+
+volumes:
+  db_data:
+
+networks:
+  app-network:
+    driver: bridge
