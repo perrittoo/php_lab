@@ -1,0 +1,16 @@
+# Enable RewriteEngine
+RewriteEngine On
+
+# Check if the request is not a real file or directory
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Rewrite /static to /Views/static
+RewriteRule ^static/style.css$ /Views/static/style.css [L]
+
+# Rewrite /admin to /Views/admin.php
+RewriteRule ^admin$ /Controllers/admin.php [L]
+
+# Rewrite /read_poem to /Views/read_poem.php
+RewriteRule ^read_poem$ /Controllers/read_poem.php [L]
+
